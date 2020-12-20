@@ -79,7 +79,7 @@ ifeq ($(call check-jvm-feature, compiler2), true)
   # Transform the ad source files into C++ source files using adlc
 
   # Setup flags for the adlc build tool (ADLCFLAGS).
-  ADLCFLAGS += -q -T
+  ADLCFLAGS += -q -T 
 
   # ADLC flags depending on target OS
   ifeq ($(call isTargetOs, linux), true)

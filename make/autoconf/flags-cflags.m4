@@ -589,6 +589,11 @@ AC_DEFUN([FLAGS_SETUP_CFLAGS_HELPER],
     fi
   fi
 
+  if test "x$OPENJDK_TARGET_OS" = xamigaosx; then
+    #WARNING handlingfh
+    LANGSTD_CXXFLAGS="$LANGSTD_CXXFLAGS -athread=native"
+  fi
+
   # Optional POSIX functionality needed by the JVM
   #
   # Check if clock_gettime is available and in which library. This indicates

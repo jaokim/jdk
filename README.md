@@ -16,6 +16,10 @@ docker build . -t jamiga-openjdk
 docker run -ti --rm -v  E:/projekt/privat/amiga/jamiga/jdk-14.0.2/:/bootjdk -v E:/projekt/privat/amiga/jamiga/jdk/:/work jamiga-openjdk:latest
 
 =Building= 
-sh configure --host=ppc-amigaos --target=ppc-amigaos --with-boot-jdk=/bootjdk/ --without-x --without-cups --with-freetype=bundled
+sh configure --host=ppc-amigaos --target=ppc-amigaos --with-boot-jdk=/bootjdk/ --without-x --without-cups --with-freetype=bundled --enable-jvm-feature-zero --with-jvm-variants=zero 
 make
+
+
+
+
 
