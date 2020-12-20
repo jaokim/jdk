@@ -1,0 +1,236 @@
+[
+    {
+        "Name": "Unilibdev",
+        "Url": "http://os4depot.net/share/library/misc/unilibdev.lha",
+        "SdkInstall": 
+        [
+            { "From": "UniLibDev/include/amigaos4/inline4/uni.h",    "To": "include/include_h/inline4/uni.h"},
+            { "From": "UniLibDev/include/amigaos4/interfaces/uni.h", "To": "include/include_h/interfaces/uni.h"},
+            { "From": "UniLibDev/include/proto/*",              "To": "include/include_h/proto"},
+            { "From": "UniLibDev/include/clib/*",                      "To": "include/include_h/clib"},
+            { "From": "UniLibDev/include/libraries/*",                 "To": "include/include_h/libraries"}
+        ]
+    },
+    {
+        "Name": "Expat",
+        "Url": "http://os4depot.net/share/development/library/misc/expat.lha",
+        "SdkInstall":
+        [
+            { "From": "*/SDK/Documentation/*", "To": "Documentation"},
+            { "From": "*/SDK/Local/*", "To": "local"},
+            { "From": "*/SDK/Include/*", "To": "include"}
+        ]
+    },
+    {
+        "Name": "Codesets",
+        "Url": "http://os4depot.net/share/library/misc/codesets.lha",
+        "SdkInstall":
+        [
+            { "From": "codesets/Developer/Autodocs/*", "To": "Documentation"},
+            { "From": "codesets/Developer/include/*", "To": "include/include_h"}
+        ]
+    },
+    {
+        "Name": "LibZ",
+        "Url": "http://os4depot.net/share/development/library/misc/libz.lha",
+        "SdkInstall":
+  	[	
+	    {"From": "Zlib/SDK/Local/*", "To": "local"}  
+	]
+    },
+    {
+	"Name": "PThreads 2005",
+	"Url":"http://os4depot.net/share/development/library/misc/pthreads.lha",
+        "SdkInstall": [
+            { "From": "SDK/*",    "To": ""}
+        ]
+        
+    },
+    {
+        "Name": "libffmpeg",
+        "Url": "http://os4depot.net/share/development/misc/libffmpeg.lha",
+        "SdkInstall": [
+            { "From": "SDK/*",    "To": ""}
+        ]
+ 
+    },
+    {
+        "Url":"http://os4depot.net/share/development/library/misc/liblzo.lha",
+        "SdkInstall": [
+            { "From": "liblzo-2.08/SDK/*",    "To": ""}
+        ]
+    },
+    {
+        "Url": "http://os4depot.net/share/development/library/graphics/libjpeg.lha",
+        "SdkInstall": [
+            { "From": "SDK/Local/*",    "To": "local/"}
+        ]
+    },
+    {
+        "Url": "http://os4depot.net/share/development/library/graphics/libpng.lha",
+        "SdkInstall": [
+            { "From": "Local/*",    "To": "local/"},
+            { "From": "Local/newlib/lib/libpng16.so.16.34.0",    "To": "local/newlib/lib/libpng16.so"}
+        ]
+    },
+    {
+        "Url": "http://os4depot.net/share/library/misc/sdl2.lha",
+        "SdkInstall": [
+            { "From": "SDL2/SDK/*",    "To": ""}
+        ]
+    },
+    {
+        "Url":"http://os4depot.net/share/development/library/misc/libopenssl.lha",
+        "SdkInstall": [
+            { "From": "libOpenSSL/SDK/*",    "To": ""}
+        ]
+    },
+    {
+        "Url":"https://github.com/jaokim/aros-stuff/releases/download/1.0/pthreads.lha",
+        "SdkInstall": [
+            { "From": "SDK/*",    "To": ""}
+        ]        
+    },
+    {
+        "Url":"http://os4depot.net/share/development/library/misc/libicu.lha",
+        "SdkInstall": [
+            { "From": "SDK/Local/*",    "To": "local/"}
+        ]
+
+    },
+    {
+        "Url": "http://os4depot.net/share/development/library/graphics/cairo.lha",
+        "SdkInstall": [
+            { "From": "Cairo/local/*",    "To": "local/"}
+        ]
+    },
+    {
+	"Name": "FreeType",
+	"Url":"http://os4depot.net/share/development/library/graphics/libfreetype.lha",
+        "SdkInstall": [
+            { "From": "Freetype2/SDK/Local/*",    "To": "local/"},
+            { "From": "Freetype2/SDK/Local/newlib/lib/libfreetype.so.21",    "To": "local/newlib/lib/libfreetype.so"}
+        ]
+        
+    },
+    {
+	"Name": "libcairo",
+	"Url":"http://os4depot.net/share/library/graphics/pixman_lib.lha",
+        "SdkInstall": [
+            { "From": "pixman_lib-53.4/SDK/local/*",    "To": "local/"}
+        ]
+        
+    },
+    {
+	"Name": "libxml2",
+	"Url":"http://os4depot.net/share/library/xml/libxml2.lha",
+        "SdkInstall": [
+            { "From": "SDK/local/*",    "To": "local/"}
+        ]
+        
+    },
+    {
+	"Name": "sqlite",
+	"Url":"http://os4depot.net/share/development/library/misc/sqlite.lha",
+        "SdkInstall": [
+            { "From": "SDK/local/*",    "To": "local/"}
+        ]
+        
+    },
+    {
+	"Name": "libcurl",
+	"Url":"http://os4depot.net/share/development/library/misc/libcurl.lha",
+        "SdkInstall": [
+            { "From": "SDK/Local/*",    "To": "local/"}
+        ]
+        
+    },
+    {
+	"Name": "MUI5",
+	"Url":"https://muidev.de/download/MUI%205.0%20-%20Release/MUI-5.0-2018R4-os4.lha",
+        "SdkInstall": [
+            { "From": "SDK/*",    "To": ""}
+        ]
+        
+    },
+    {
+	"Name": "libdl",
+	"Url":"http://os4depot.net/share/development/library/misc/libdl.lha",
+        "SdkInstall": [
+            { "From": "libdl/libdl.a",    "To": "local/newlib/lib/"},
+            { "From": "libdl/dlfcn.h",    "To": "local/newlib/include/"}
+        ]
+        
+    },
+    {
+        "Name": "libcairo-1.14.10",
+        "Url": "http://downloads.sourceforge.net/project/odyssey-os4-dependencies/cairo_lib-1.14.10.tar",
+        "ArchiveType" : "tar",
+        "SdkInstall": [
+            {"From": "cairo_lib/cairo_lib-1.14.10/SDK/local/*", "To": "local/"}
+        ]
+    },
+    {
+    	"Name": "libxslt-1.1.30",
+    	"Url":"http://downloads.sourceforge.net/project/odyssey-os4-dependencies/libxslt-1.1.30.tar",
+        "ArchiveType" : "tar",
+        "SdkInstall": [
+            { "From": "SDK/local/*",    "To": "local/"}
+        ]
+        
+    },
+    {
+    	"Name": "libfontconfig-2.13.1",
+    	"Url":"http://downloads.sourceforge.net/project/odyssey-os4-dependencies/libfontconfig-2.13.1.tar",
+        "ArchiveType" : "tar",
+        "SdkInstall": [
+            { "From": "SDK/local/*",    "To": "local/"}
+        ]
+        
+    },
+    {
+    	"Name": "cairolib-1.14.10-withfcfont",
+    	"Url":"http://downloads.sourceforge.net/project/odyssey-os4-dependencies/cairolib-1.14.10-withfcfont.tar",
+        "ArchiveType" : "tar",
+        "SdkInstall": [
+            {"From": "cairo_lib/cairo_lib-1.14.10/SDK/local/*", "To": "local/"}
+        ]
+        
+    },
+    {
+    	"Name": "libuuid",
+    	"Url":"http://downloads.sourceforge.net/project/odyssey-os4-dependencies/libuuid.tar",
+        "ArchiveType" : "tar",
+        "SdkInstall": [
+            { "From": "SDK/local/*",    "To": "local/"}
+        ]
+        
+    },
+    {
+       "Name" : "asyncio",
+       "Url" : "http://os4depot.net/share/utility/misc/asyncio.lha",
+       "ArchiveType" : "lha",
+        "SdkInstall": [
+            { "From": "AsyncIO/include/*",    "To": "include/include_h/"}
+        ]
+    
+    },
+    {
+       "Name" : "CGraphX-DevKit",
+       "Url" : "http://aminet.net/dev/misc/CGraphX-DevKit.lha",
+       "ArchiveType" : "lha",
+        "SdkInstall": [
+            { "From": "CGraphX/C/Include/cybergraphx",    "To": "include/include_h/"}
+        ]
+    
+    },
+	{
+        "Name": "Libffi",
+        "Url": "http://os4depot.net/share/development/library/misc/libffi.lha",
+        "SdkInstall":
+        [
+            { "From": "libffi/local/*",    "To": "local"}
+        ]
+    }
+    
+]
