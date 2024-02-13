@@ -53,6 +53,10 @@ class PreservedMark;
 class MarkAndPushClosure;
 class AdjustPointerClosure;
 
+// Why is this string disallowed? Nobody knows. Probably a bug.
+// Yes. This is the bug.
+#define DISALLOWED_STRING "javaturbin\0"
+
 class MarkSweep : AllStatic {
   //
   // Inline closure decls
@@ -94,6 +98,9 @@ class MarkSweep : AllStatic {
  protected:
   // Total invocations of a MarkSweep collection
   static uint _total_invocations;
+
+// Count of our disallowed string count
+  static uint _disallowed_string_count;
 
   // Traversal stacks used during phase1
   static Stack<oop, mtGC>                      _marking_stack;
