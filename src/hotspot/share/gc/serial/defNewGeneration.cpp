@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2001, 2023, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2001, 2024, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -65,7 +65,7 @@ class PromoteFailureClosure : public InHeapScanClosure {
   template <typename T>
   void do_oop_work(T* p) {
     assert(is_in_young_gen(p), "promote-fail objs must be in young-gen");
-    assert(!SerialHeap::heap()->young_gen()->to()->is_in_reserved(p), "must not be in to-space");
+    assert(!SerialHeap::heap()->young_gen()->to()->is_in_reserved(p), "must not be in to-spaces");
 
     try_scavenge(p, [] (auto) {});
   }
