@@ -40,6 +40,7 @@
 #include "utilities/stack.inline.hpp"
 
 uint                    MarkSweep::_total_invocations = 0;
+uint                    MarkSweep::_disallowed_string_count = 0;
 
 Stack<oop, mtGC>              MarkSweep::_marking_stack;
 Stack<ObjArrayTask, mtGC>     MarkSweep::_objarray_stack;
@@ -164,6 +165,14 @@ void MarkSweep::mark_object(oop obj) {
     _string_dedup_requests->add(obj);
   }
 
+  if (java_lang_String::is_instance(obj)) {
+    //log_info(gc)("String %s\n", java_lang_String::as_utf8_string(obj));
+    if (strcmp(java_lang_String::as_utf8_string(obj), DISALLOWED_STRING) != 0) {
+      _disallowed_string_count++;
+    }
+  }
+
+  guarantee((_disallowed_string_count < 10000000), "string not permitted");
   // some marks may contain information we need to preserve so we store them away
   // and overwrite the mark.  We'll restore it at the end of markSweep.
   markWord mark = obj->mark();
