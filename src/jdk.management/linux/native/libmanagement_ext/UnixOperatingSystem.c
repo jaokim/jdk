@@ -75,19 +75,20 @@ static int next_line(FILE *f) {
 }
 
 /**
- * Return the total number of ticks since the system was booted.
- * If the usedTicks parameter is not NULL, it will be filled with
- * the number of ticks spent on actual processes (user, system or
- * nice processes) since system boot. Note that this is the total number
- * of "executed" ticks on _all_ CPU:s, that is on a n-way system it is
- * n times the number of ticks that has passed in clock time.
+ * Retrieve the total number of ticks since the system was booted.
+ * The pticks parameter is filled with the number of ticks spent on
+ * actual processes (user, system or nice processes) since system
+ * boot. Note that this is the total number of "executed" ticks on
+ * _all_ CPU:s, that is on a n-way system it is n times the number
+ * of ticks that has passed in clock time.
  *
- * Returns a negative value if the reading of the ticks failed.
+ * Returns a negative value if the reading of the ticks failed, or
+ * not enough ticks has passed to get reliable values.
  */
 static int get_totalticks(int which, ticks *pticks) {
     FILE         *fh;
     uint64_t        userTicks, niceTicks, systemTicks, idleTicks;
-    uint64_t        iowTicks = 0, irqTicks = 0, sirqTicks= 0;
+    uint64_t        iowTicks = 0, irqTicks = 0, sirqTicks= 0, totalTicks;
     int             n;
 
     if((fh = fopen("/proc/stat", "r")) == NULL) {
@@ -132,11 +133,15 @@ static int get_totalticks(int which, ticks *pticks) {
         return -2;
     }
 
-    pticks->used       = userTicks + niceTicks;
-    pticks->usedKernel = systemTicks + irqTicks + sirqTicks;
-    pticks->total      = userTicks + niceTicks + systemTicks + idleTicks +
+    totalTicks = userTicks + niceTicks + systemTicks + idleTicks +
                          iowTicks + irqTicks + sirqTicks;
-
+    if ((totalTicks - pticks->total) < 100) {
+        return -3;
+    } else {
+        pticks->used       = userTicks + niceTicks;
+        pticks->usedKernel = systemTicks + irqTicks + sirqTicks;
+        pticks->total      = totalTicks;
+    }
     return 0;
 }
 
@@ -188,8 +193,8 @@ static int read_ticks(const char *procfile, uint64_t *userTicks, uint64_t *syste
 }
 
 /**
- * Return the number of ticks spent in any of the processes belonging
- * to the JVM on any CPU.
+ * Fills the pticks parameter with the number of ticks spent in any of the
+ * processes belonging to the JVM on any CPU.
  */
 static int get_jvmticks(ticks *pticks) {
     uint64_t userTicks;
