@@ -46,6 +46,8 @@ struct ticks {
     uint64_t  used;
     uint64_t  usedKernel;
     uint64_t  total;
+    double    cachedUserLoad;
+    double    cachedSystemLoad;
 };
 
 typedef struct ticks ticks;
@@ -135,6 +137,8 @@ static int get_totalticks(int which, ticks *pticks) {
 
     totalTicks = userTicks + niceTicks + systemTicks + idleTicks +
                          iowTicks + irqTicks + sirqTicks;
+
+    // not enough ticks to reliable calculate CPU load
     if ((totalTicks - pticks->total) < 100) {
         return -3;
     } else {
@@ -265,7 +269,7 @@ static double get_cpuload_internal(int which, double *pkernelLoad, CpuLoadTarget
     uint64_t udiff, kdiff, tdiff;
     ticks *pticks, tmp;
     double user_load = -1.0;
-    int failed = 0;
+    int failed = 0, result = 0;
 
     *pkernelLoad = 0.0;
 
@@ -287,7 +291,12 @@ static double get_cpuload_internal(int which, double *pkernelLoad, CpuLoadTarget
             if (get_jvmticks(pticks) != 0) {
                 failed = 1;
             }
-        } else if (get_totalticks(which, pticks) < 0) {
+        } else if ((result = get_totalticks(which, pticks)) < 0) {
+            if (result == -3) {
+                // not enough ticks, use old values
+                user_load = pticks->cachedUserLoad;
+                *pkernelLoad = pticks->cachedSystemLoad;
+            }
             failed = 1;
         }
 
@@ -312,6 +321,9 @@ static double get_cpuload_internal(int which, double *pkernelLoad, CpuLoadTarget
                 user_load = (udiff / (double)tdiff);
                 user_load = MAX(user_load, 0.0);
                 user_load = MIN(user_load, 1.0);
+
+                pticks->cachedUserLoad = user_load;
+                pticks->cachedSystemLoad = *pkernelLoad;
             }
         }
     }
