@@ -264,9 +264,9 @@ static pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 
 /**
  * Return the user load of the CPU as a double. The parameter pkernelLoad
- * is set to the kernel load. 
+ * is set to the kernel load.
  * 1.0 means the CPU process uses all available time for user or system
- * processes, 0.0 means the CPU uses all time being idle. 
+ * processes, 0.0 means the CPU uses all time being idle.
  *
  * Returns a negative value if there is a problem in determining the CPU load.
  */
