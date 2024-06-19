@@ -138,14 +138,10 @@ static int get_totalticks(int which, ticks *pticks) {
     totalTicks = userTicks + niceTicks + systemTicks + idleTicks +
                          iowTicks + irqTicks + sirqTicks;
 
-    // not enough ticks to reliable calculate CPU load
-    if ((totalTicks - pticks->total) < 100) {
-        return -3;
-    } else {
-        pticks->used       = userTicks + niceTicks;
-        pticks->usedKernel = systemTicks + irqTicks + sirqTicks;
-        pticks->total      = totalTicks;
-    }
+    pticks->used       = userTicks + niceTicks;
+    pticks->usedKernel = systemTicks + irqTicks + sirqTicks;
+    pticks->total      = totalTicks;
+
     return 0;
 }
 
@@ -219,6 +215,11 @@ static int get_jvmticks(ticks *pticks) {
     return 0;
 }
 
+void initCachedValues(ticks *cpuTicks) {
+    cpuTicks->cachedSystemLoad = -1.0;
+    cpuTicks->cachedUserLoad = -1.0;
+}
+
 /**
  * This method must be called first, before any data can be gathererd.
  */
@@ -239,12 +240,14 @@ int perfInit() {
         if (counters.cpus != NULL)  {
             // For the CPU load
             get_totalticks(-1, &counters.cpuTicks);
-
+            initCachedValues(&counters.cpuTicks);
             for (i = 0; i < n; i++) {
                 get_totalticks(i, &counters.cpus[i]);
+                initCachedValues(&counters.cpus[i]);
             }
             // For JVM load
             get_jvmticks(&counters.jvmTicks);
+            initCachedValues(&counters.jvmTicks);
             initialized = 1;
         }
     }
@@ -292,11 +295,6 @@ static double get_cpuload_internal(int which, double *pkernelLoad, CpuLoadTarget
                 failed = 1;
             }
         } else if ((result = get_totalticks(which, pticks)) < 0) {
-            if (result == -3) {
-                // not enough ticks, use old values
-                user_load = pticks->cachedUserLoad;
-                *pkernelLoad = pticks->cachedSystemLoad;
-            }
             failed = 1;
         }
 
@@ -307,8 +305,14 @@ static double get_cpuload_internal(int which, double *pkernelLoad, CpuLoadTarget
             tdiff = pticks->total - tmp.total;
             udiff = pticks->used - tmp.used;
 
-            if (tdiff == 0) {
-                user_load = 0;
+            printf("tdiff: %ld\n", tdiff);
+            //if (tdiff == 0) {
+            //    user_load = 0;
+            //} else 
+            if (tdiff < 100) {
+                // not enough ticks, use old values
+                user_load = pticks->cachedUserLoad;
+                *pkernelLoad = pticks->cachedSystemLoad;
             } else {
                 if (tdiff < (udiff + kdiff)) {
                     tdiff = udiff + kdiff;
