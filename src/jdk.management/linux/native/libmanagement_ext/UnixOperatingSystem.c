@@ -241,6 +241,7 @@ int perfInit() {
             // For the CPU load
             get_totalticks(-1, &counters.cpuTicks);
             initCachedValues(&counters.cpuTicks);
+
             for (i = 0; i < n; i++) {
                 get_totalticks(i, &counters.cpus[i]);
                 initCachedValues(&counters.cpus[i]);
@@ -248,6 +249,7 @@ int perfInit() {
             // For JVM load
             get_jvmticks(&counters.jvmTicks);
             initCachedValues(&counters.jvmTicks);
+
             initialized = 1;
         }
     }
@@ -261,9 +263,10 @@ int perfInit() {
 static pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 
 /**
- * Return the load of the CPU as a double. 1.0 means the CPU process uses all
- * available time for user or system processes, 0.0 means the CPU uses all time
- * being idle.
+ * Return the user load of the CPU as a double. The parameter pkernelLoad
+ * is set to the kernel load. 
+ * 1.0 means the CPU process uses all available time for user or system
+ * processes, 0.0 means the CPU uses all time being idle. 
  *
  * Returns a negative value if there is a problem in determining the CPU load.
  */
@@ -305,10 +308,6 @@ static double get_cpuload_internal(int which, double *pkernelLoad, CpuLoadTarget
             tdiff = pticks->total - tmp.total;
             udiff = pticks->used - tmp.used;
 
-            printf("tdiff: %ld\n", tdiff);
-            //if (tdiff == 0) {
-            //    user_load = 0;
-            //} else 
             if (tdiff < 100) {
                 // not enough ticks, use old values
                 user_load = pticks->cachedUserLoad;
