@@ -90,7 +90,7 @@ static int next_line(FILE *f) {
 static int get_totalticks(int which, ticks *pticks) {
     FILE         *fh;
     uint64_t        userTicks, niceTicks, systemTicks, idleTicks;
-    uint64_t        iowTicks = 0, irqTicks = 0, sirqTicks= 0, totalTicks;
+    uint64_t        iowTicks = 0, irqTicks = 0, sirqTicks= 0;
     int             n;
 
     if((fh = fopen("/proc/stat", "r")) == NULL) {
@@ -135,12 +135,10 @@ static int get_totalticks(int which, ticks *pticks) {
         return -2;
     }
 
-    totalTicks = userTicks + niceTicks + systemTicks + idleTicks +
-                         iowTicks + irqTicks + sirqTicks;
-
     pticks->used       = userTicks + niceTicks;
     pticks->usedKernel = systemTicks + irqTicks + sirqTicks;
-    pticks->total      = totalTicks;
+    pticks->total      = userTicks + niceTicks + systemTicks + idleTicks +
+                         iowTicks + irqTicks + sirqTicks;
 
     return 0;
 }
