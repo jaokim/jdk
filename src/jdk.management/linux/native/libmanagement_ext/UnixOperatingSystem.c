@@ -275,7 +275,7 @@ static double get_cpuload_internal(int which, double *pkernelLoad, CpuLoadTarget
     uint64_t udiff, kdiff, tdiff;
     ticks *pticks, tmp;
     double user_load = -1.0;
-    int failed = 0, result = 0;
+    int failed = 0;
 
     *pkernelLoad = 0.0;
 
@@ -297,7 +297,7 @@ static double get_cpuload_internal(int which, double *pkernelLoad, CpuLoadTarget
             if (get_jvmticks(pticks) != 0) {
                 failed = 1;
             }
-        } else if ((result = get_totalticks(which, pticks)) < 0) {
+        } else if (get_totalticks(which, pticks) < 0) {
             failed = 1;
         }
 
